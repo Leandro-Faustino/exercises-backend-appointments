@@ -32,7 +32,8 @@
       ],
       "prettier/prettier": "error",
       "class-methods-use-this":"off",
-      "@typescript-esLint/camelcase": "off"
+      "@typescript-esLint/camelcase": "off",
+      "spaced-comment":"off"
     },
     "settings": {
       "import/resolver": {
