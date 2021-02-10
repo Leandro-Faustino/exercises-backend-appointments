@@ -24,19 +24,22 @@ export default class CreateUsers1598650129615 implements MigrationInterface {
             type: 'varchar',
             isUnique: true,
           },
-          {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
+
           {
             name: 'password',
             type: 'varchar',
           },
+
+          {
+            name: 'created_at',
+            type: 'timestamp', //primeiro registro criado dentro da tabela do usuario.
+            default: 'now()',
+          },
+
           {
             name: 'updated_at',
             type: 'timestamp',
-            default: 'now()',
+            default: 'now()', //pegar ultimo horario que o registro foi alterado dentro da tabela do usuario.
           },
         ],
       }),

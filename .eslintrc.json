@@ -23,17 +23,20 @@
         "prettier"
     ],
     "rules": {
+
+      "prettier/prettier": "error",
+      "class-methods-use-this":"off",
+      "@typescript-esLint/camelcase": "off",
+      "spaced-comment":"off",
+      "@typescript-eslint/no-unused-vars": ["error", {
+        "argsIgnorePattern": "_"}],
       "import/extensions": [
         "error",
         "ignorePackages",
         {
           "ts": "never"
         }
-      ],
-      "prettier/prettier": "error",
-      "class-methods-use-this":"off",
-      "@typescript-esLint/camelcase": "off",
-      "spaced-comment":"off"
+      ]
     },
     "settings": {
       "import/resolver": {

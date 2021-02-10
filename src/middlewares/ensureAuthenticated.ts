@@ -1,6 +1,7 @@
 import { Response, Request, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../config/auth';
+import AppError from '../error/AppError';
 
 interface TokenPayload {
   //retorno do meu token-
@@ -19,17 +20,17 @@ export default function ensureAuthenticated(
 
   if (!authHeader) {
     //validação se nao existir da um erro
-    throw new Error('JWT token is missing');
+    throw new AppError('JWT token is missing', 401);
   }
-  //dividir token em partes [bearer e numro de token]
+  //dividir token em partes [bearer + numero de token] quando eu não for usar uma variavel da desustruturação posso deixar em branco
   const [, token] = authHeader.split(' ');
 
   try {
-    const decoded = verify(token, authConfig.jwt.secret); //vai verificar se meu token e valido
+    const decoded = verify(token, authConfig.jwt.secret); //vai verificar se meu token e valido,mesmo secret utilizado no service
     const { sub } = decoded as TokenPayload;
 
     request.user = {
-      id: sub,
+      id: sub, //sub do token
     };
 
     // eslint-disable-next-line no-console
@@ -37,6 +38,6 @@ export default function ensureAuthenticated(
 
     return next(); //se deu tudo certo faz com que a requisiçao continue middleware
   } catch (err) {
-    throw new Error('Invalid JWT token');
+    throw new AppError('Invalid JWT token', 401);
   }
 }
