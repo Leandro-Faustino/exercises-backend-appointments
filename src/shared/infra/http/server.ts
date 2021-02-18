@@ -3,8 +3,8 @@ import 'express-async-errors';
 import routes from './routes';
 
 import 'reflect-metadata';
-import './database';
-import uploadConfig from './config/upload';
+import '../typeorm';
+import uploadConfig from '../../../config/upload';
 import AppError from './error/AppError';
 
 const app = express();
