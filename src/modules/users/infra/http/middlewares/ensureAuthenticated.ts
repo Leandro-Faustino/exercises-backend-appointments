@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
-import authConfig from '../../../../config/auth';
-import AppError from '../error/AppError';
+import authConfig from '@config/auth';
+import AppError from '@shared/infra/http/error/AppError';
 
 interface TokenPayload {
   //retorno do meu token-

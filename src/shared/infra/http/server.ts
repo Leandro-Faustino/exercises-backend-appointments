@@ -1,11 +1,13 @@
+import 'reflect-metadata';
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import routes from './routes';
 
-import 'reflect-metadata';
+
 import '../typeorm';
 import uploadConfig from '../../../config/upload';
 import AppError from './error/AppError';
+import  '@shared/container'; // começar a usar injeçao
 
 const app = express();
 app.use(express.json());

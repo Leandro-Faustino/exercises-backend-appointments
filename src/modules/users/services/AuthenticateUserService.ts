@@ -1,27 +1,37 @@
-import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import User from '../infra/typeorm/entities/User';
-import authConfig from '../../../config/auth';
-import AppError from '../../../shared/infra/http/error/AppError';
+import User from '@modules/users/infra/typeorm/entities/User';
+import authConfig from '@config/auth';
+import AppError from '@shared/infra/http/error/AppError';
+import IUsersRepository from '../repositories/IUsersRepository';
 
-interface Request {
+import { injectable,inject } from 'tsyringe';
+
+
+interface IRequest {
   email: string;
   password: string;
 }
 
-interface Response {
+interface IResponse {
   user: User;
   token: string;
 }
-
+@injectable()
 class AuthenticateUserService {
-  public async execute({ email, password }: Request): Promise<Response> {
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository) {
+
+  }
+
+
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
     // validAR SE O EMAIL DO USUARIO E VALIDO
-    const userRepository = getRepository(User);
+
 
     //se email recebido e igual ao email que esta dentro do banco de dados
-    const user = await userRepository.findOne({ where: { email } });
+    const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
       //RETORNO PARA O USUARIO CASO DADOS INCORRETOS
