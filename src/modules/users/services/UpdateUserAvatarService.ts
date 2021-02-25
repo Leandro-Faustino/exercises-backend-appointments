@@ -7,6 +7,7 @@ import AppError from '@shared/infra/http/error/AppError';
 import uploadConfig from '@config/upload';
 import IUsersRepository from '../repositories/IUsersRepository';
 import { injectable,inject } from 'tsyringe';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProviders';
 
 interface IRequest {
   user_id: string;
@@ -16,7 +17,12 @@ interface IRequest {
 class UpdateUserAvatarService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository) {
+    private usersRepository: IUsersRepository,
+
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider,
+
+    ) {
 
   }
 
@@ -29,13 +35,10 @@ class UpdateUserAvatarService {
     }
     if (user.avatar) {
       //deletar avatar anterior
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar); //path.join une dois caminhos 1-caminho do meu upload, 2-arquivos que queremos remover
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath); //uso do file system do node com uma funçao que retorna status do arquivo caso exista;
-
-      if (userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath); //deleta arquivo pelo nome
-      }
+     await this.storageProvider.deleteFile(user.avatar)
     }
+
+    const filename = await this.storageProvider.saveFile(avatarFilename)
 
     user.avatar = avatarFilename;
 
