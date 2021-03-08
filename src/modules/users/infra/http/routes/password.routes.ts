@@ -10,6 +10,7 @@ const resetPasswordController = new ResetPasswordController();
 
 passwordRouter.post(
   '/forgot',
+  //validaçao de dados
   celebrate({
     [Segments.BODY]: {
       email: Joi.string().email().required(),

@@ -1,6 +1,6 @@
 export default {
   jwt: {
-    secret: '50995b2d629cc6b0062203b236a37f9a',
+    secret: process.env.APP_SECRET || 'default',//TODAS NOSSAS VRAIVEIS DE AMBIENTE VAO FICAR AQUI DENTRO
     expiresIn: '1d',
   },
 };

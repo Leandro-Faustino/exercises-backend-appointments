@@ -5,7 +5,7 @@ import AppError from '@shared/infra/http/error/AppError';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 import { injectable,inject } from 'tsyringe';
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 
 
 interface IRequest {
@@ -23,7 +23,7 @@ class AuthenticateUserService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject('hashProvider')
+    @inject('HashProvider')
       private hashProvider: IHashProvider,
   ){
 

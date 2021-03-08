@@ -5,3 +5,6 @@ temp/
 .vscode/
 .idea/
 build/
+.env
+coverage
+ormconfig.json
